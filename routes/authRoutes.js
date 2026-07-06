@@ -3,10 +3,12 @@ const express = require("express");
 const router = express.Router();
 
 const authController = require("../controllers/authController");
+const { isGuest, isAuthenticated } = require("../middleware/authMiddleware");
 const {
-    isGuest,
-    isAuthenticated
-} = require("../middleware/authMiddleware");
+    registerValidators,
+    loginValidators,
+    handleValidationErrors
+} = require("../middleware/validators/authValidators");
 
 /* ---------- Registration ---------- */
 
@@ -19,6 +21,8 @@ router.get(
 router.post(
     "/register",
     isGuest,
+    registerValidators,
+    handleValidationErrors("/register"),
     authController.register
 );
 
@@ -33,6 +37,8 @@ router.get(
 router.post(
     "/login",
     isGuest,
+    loginValidators,
+    handleValidationErrors("/login"),
     authController.login
 );
 
