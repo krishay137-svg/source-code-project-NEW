@@ -1,25 +1,56 @@
 -- =====================================================
--- EduShare Database Schema
+-- EduShare Database Schema (SQLite)
 -- Part 2 - Authentication Foundation
 -- =====================================================
 
-CREATE DATABASE IF NOT EXISTS edushare;
-
-USE edushare;
-
 CREATE TABLE IF NOT EXISTS users (
 
-    id INT AUTO_INCREMENT PRIMARY KEY,
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
 
-    full_name VARCHAR(100) NOT NULL,
+    full_name TEXT NOT NULL,
 
-    email VARCHAR(150) NOT NULL UNIQUE,
+    email TEXT NOT NULL UNIQUE,
 
-    password VARCHAR(255) NOT NULL,
+    password TEXT NOT NULL,
 
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    created_at TEXT DEFAULT (datetime('now')),
 
-    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-        ON UPDATE CURRENT_TIMESTAMP
+    updated_at TEXT DEFAULT (datetime('now'))
+
+);
+
+-- =====================================================
+-- Part 3 - Notes Management
+-- =====================================================
+
+CREATE TABLE IF NOT EXISTS notes (
+
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+
+    user_id INTEGER NOT NULL,
+
+    title TEXT NOT NULL,
+
+    subject TEXT NOT NULL,
+
+    description TEXT NOT NULL,
+
+    file_name TEXT NOT NULL,
+
+    file_path TEXT NOT NULL,
+
+    file_size INTEGER NOT NULL,
+
+    file_type TEXT NOT NULL,
+
+    downloads INTEGER DEFAULT 0,
+
+    rating REAL DEFAULT 0,
+
+    created_at TEXT DEFAULT (datetime('now')),
+
+    updated_at TEXT DEFAULT (datetime('now')),
+
+    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
 
 );
