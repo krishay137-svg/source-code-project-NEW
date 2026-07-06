@@ -21,7 +21,7 @@ class Subject {
             ORDER  BY name ASC
         `;
 
-        database.query(query, [], callback);
+        database.all(query, [], callback);
 
     }
 
@@ -34,7 +34,7 @@ class Subject {
      */
     static findById(id, callback) {
 
-        database.query(
+        database.all(
             "SELECT id, name, code, description FROM subjects WHERE id = ?",
             [parseInt(id)],
             callback

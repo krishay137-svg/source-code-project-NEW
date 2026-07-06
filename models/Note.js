@@ -6,6 +6,7 @@ const database = require("../config/database");
    Part 5 — Search & Discovery methods.
    (Part 3 — Notes Management will extend this model
     with create, update, delete, and upload methods.)
+*/
 
 class Note {
 
@@ -106,7 +107,7 @@ class Note {
 
         values.push(parseInt(limit), offset);
 
-        database.query(query, values, callback);
+        database.all(query, values, callback);
 
     }
 
@@ -156,36 +157,7 @@ class Note {
             WHERE  ${conditions.join(" AND ")}
         `;
 
-        database.query(query, values, callback);
-
-    }
-
-    /**
-     * findById
-     * Retrieves a single approved note by ID with full details.
-     *
-     * @param {number}   id       - Note ID
-     * @param {Function} callback - (err, results)
-     */
-    static findById(id, callback) {
-
-        const query = `
-            SELECT
-                n.*,
-                u.full_name AS uploader_name,
-                s.name      AS subject_name,
-                s.code      AS subject_code,
-                GROUP_CONCAT(DISTINCT t.name ORDER BY t.name SEPARATOR ',') AS tags
-            FROM   notes    n
-            LEFT   JOIN users    u  ON n.user_id    = u.id
-            LEFT   JOIN subjects s  ON n.subject_id = s.id
-            LEFT   JOIN note_tags nt ON n.id        = nt.note_id
-            LEFT   JOIN tags      t  ON nt.tag_id   = t.id
-            WHERE  n.id = ? AND n.is_approved = 1
-            GROUP  BY n.id
-        `;
-
-        database.query(query, [parseInt(id)], callback);
+        database.all(query, values, callback);
 
     }
 
@@ -217,7 +189,7 @@ class Note {
             LIMIT  ?
         `;
 
-        database.query(query, [parseInt(limit)], callback);
+        database.all(query, [parseInt(limit)], callback);
 
     }
 
@@ -250,7 +222,7 @@ class Note {
             LIMIT  ?
         `;
 
-        database.query(
+        database.all(
             query,
             [parseInt(noteId), parseInt(subjectId), parseInt(limit)],
             callback
@@ -267,13 +239,15 @@ class Note {
      */
     static incrementViews(id, callback) {
 
-        database.query(
+        database.all(
             "UPDATE notes SET view_count = view_count + 1 WHERE id = ?",
             [parseInt(id)],
             callback
         );
 
-class Note {
+    }
+
+
 
     static create(data, callback) {
         database.run(
