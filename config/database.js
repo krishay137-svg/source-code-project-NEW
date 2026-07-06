@@ -1,20 +1,17 @@
-const mysql = require("mysql2");
+const sqlite3 = require("sqlite3");
+const path = require("path");
 
-const connection = mysql.createConnection({
-    host: process.env.DB_HOST,
-    port: process.env.DB_PORT,
-    user: process.env.DB_USER,
-    password: process.env.DB_PASSWORD,
-    database: process.env.DB_NAME
-});
+const dbPath = process.env.DB_PATH || path.join(__dirname, "..", "database", "edushare.db");
 
-connection.connect((error) => {
-    if (error) {
-        console.error("❌ MySQL Connection Failed");
-        console.error(error.message);
+const db = new sqlite3.Database(dbPath, (err) => {
+    if (err) {
+        console.error("Failed to connect to SQLite database:", err.message);
     } else {
-        console.log("✅ Connected to MySQL Database");
+        console.log("Connected to SQLite database:", dbPath);
     }
 });
 
-module.exports = connection;
+db.run("PRAGMA journal_mode=WAL");
+db.run("PRAGMA foreign_keys=ON");
+
+module.exports = db;
