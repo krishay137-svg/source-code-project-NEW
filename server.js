@@ -1,3 +1,4 @@
+
 require("dotenv").config();
 console.log(process.env.SESSION_SECRET);
 const express = require("express");
@@ -5,7 +6,7 @@ const path = require("path");
 const session = require("express-session");
 const cookieParser = require("cookie-parser");
 const morgan = require("morgan");
-
+const indexRoutes = require("./routes/indexRoutes");
 const database = require("./config/database");
 
 const app = express();
@@ -34,11 +35,7 @@ app.use(express.static(path.join(__dirname, "public")));
 
 app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 
-/* ---------------------------- Routes ---------------------------- */
-
-app.get("/", (req, res) => {
-    res.sendFile(path.join(__dirname, "views", "index.html"));
-});
+app.use("/", indexRoutes);
 
 /* -------------------------- 404 Handler -------------------------- */
 
