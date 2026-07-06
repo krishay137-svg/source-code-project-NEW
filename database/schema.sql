@@ -1,16 +1,25 @@
 -- =====================================================
--- EduShare Database Foundation
--- Part 1 - Commit 3
+-- EduShare Database Schema
+-- Part 2 - Authentication Foundation
 -- =====================================================
 
--- Create the database if it does not already exist
 CREATE DATABASE IF NOT EXISTS edushare;
 
--- Select the EduShare database
 USE edushare;
 
--- =====================================================
--- End of Database Foundation
--- Future tables will be introduced progressively
--- according to the project development plan.
--- =====================================================
+CREATE TABLE IF NOT EXISTS users (
+
+    id INT AUTO_INCREMENT PRIMARY KEY,
+
+    full_name VARCHAR(100) NOT NULL,
+
+    email VARCHAR(150) NOT NULL UNIQUE,
+
+    password VARCHAR(255) NOT NULL,
+
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+        ON UPDATE CURRENT_TIMESTAMP
+
+);
