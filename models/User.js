@@ -3,67 +3,44 @@ const database = require("../config/database");
 class User {
 
     static create(userData, callback) {
-
-        const query = `
-            INSERT INTO users
-            (full_name, email, password)
-            VALUES (?, ?, ?)
-        `;
-
-        database.query(
-            query,
-            [
-                userData.full_name,
-                userData.email,
-                userData.password
-            ],
+        database.run(
+            "INSERT INTO users (full_name, email, password) VALUES (?, ?, ?)",
+            [userData.full_name, userData.email, userData.password],
             callback
         );
-
     }
 
     static findByEmail(email, callback) {
-
-        database.query(
+        database.get(
             "SELECT * FROM users WHERE email = ?",
             [email],
-            callback
+            (err, row) => {
+                if (err) return callback(err);
+                callback(null, row ? [row] : []);
+            }
         );
-
     }
 
     static findById(id, callback) {
-
-        database.query(
+        database.get(
             "SELECT * FROM users WHERE id = ?",
             [id],
-            callback
+            (err, row) => {
+                if (err) return callback(err);
+                callback(null, row ? [row] : []);
+            }
         );
-
     }
 
     static emailExists(email, callback) {
-
-        database.query(
-
+        database.get(
             "SELECT id FROM users WHERE email = ?",
-
             [email],
-
-            (error, results) => {
-
-                if (error) {
-
-                    return callback(error);
-
-                }
-
-                callback(null, results.length > 0);
-
+            (error, row) => {
+                if (error) return callback(error);
+                callback(null, !!row);
             }
-
         );
-
     }
 
 }
