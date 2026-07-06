@@ -1,19 +1,37 @@
 # CONTRIBUTORS
 
-| Name | GitHub Username | Role | Responsibilities |
-|------|-----------------|------|------------------|
-| Krishay | | Backend | Authentication |
-| Nandan Kumar | | Backend | Notes Management |
-| Ashlyn | | Frontend | Dashboard & Profiles |
-| Aditya 4 | | Frontend | Search & Discovery |
-| Nihar 5 | | Backend | Community Features |
+| Name | GitHub Username | Assigned Module |
+|------|-----------------|-----------------|
+| Krishay | | Project Foundation & Authentication |
+| Nandan Kumar | | Notes Management |
+| Ashlyn | | Dashboard & Profiles |
+| Aditya | | Search & Discovery |
+| Nihar | | Community Features |
 
 ---
 
-## Contribution Guidelines
+## Git Workflow
 
-- Every feature must be developed in its own branch.
-- All merges must be performed using Pull Requests.
-- Write meaningful commit messages.
-- Do not push directly to the `main` branch.
-- Test code before creating a Pull Request.
+- Create a feature branch before starting work.
+- Keep commits meaningful and focused.
+- Open a Pull Request before merging.
+- Resolve merge conflicts before approval.
+- Never commit sensitive files such as `.env`.
+- Test changes before submitting a Pull Request.
+
+---
+
+## Commit Policy
+
+Each commit should represent meaningful progress.
+
+Examples:
+
+- Initialize project structure
+- Add landing page
+- Establish database foundation
+- Refactor application routing
+- Implement user registration
+- Add login validation
+
+Artificial commits should be avoided.

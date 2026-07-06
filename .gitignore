@@ -1,9 +1,25 @@
+# Dependencies
 node_modules/
 
+# Environment Variables
 .env
 
+# Uploaded Files
 uploads/notes/*
 uploads/profilePictures/*
 
 !uploads/notes/.gitkeep
 !uploads/profilePictures/.gitkeep
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# OS Files
+.DS_Store
+Thumbs.db
+
+# IDE Files
+.vscode/
+.idea/
