@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta name="description"
+          content="Search and discover study notes shared by students on EduShare. Filter by subject, tags, and sort by popularity or date.">
+
+    <title>Search Notes | EduShare</title>
+
+    <link rel="stylesheet" href="/css/style.css">
+
+    <link rel="stylesheet" href="/css/search.css">
+
+</head>
+
+<body>
+
+    <!-- ================= NAVBAR ================= -->
+
+    <header>
+
+        <nav class="navbar">
+
+            <div class="logo">
+                <a href="/">EduShare</a>
+            </div>
+
+            <ul class="nav-links">
+
+                <li>
+                    <a href="/">Home</a>
+                </li>
+
+                <li>
+                    <a href="/search" class="nav-active">Search</a>
+                </li>
+
+                <li>
+                    <a href="/login">Login</a>
+                </li>
+
+                <li>
+                    <a href="/register">Register</a>
+                </li>
+
+            </ul>
+
+        </nav>
+
+    </header>
+
+    <!-- ================= SEARCH HERO ================= -->
+
+    <section class="search-hero">
+
+        <div class="search-hero-content">
+
+            <h1>Find Study Notes</h1>
+
+            <p>Search thousands of notes shared by students across all subjects and topics.</p>
+
+            <div class="search-bar-wrapper">
+
+                <div class="search-bar" role="search">
+
+                    <span class="search-icon" aria-hidden="true">🔍</span>
+
+                    <input
+                        type="search"
+                        id="search-input"
+                        placeholder="Search by title, subject, topic..."
+                        autocomplete="off"
+                        spellcheck="false"
+                        aria-label="Search notes"
+                    >
+
+                    <button
+                        id="search-clear-btn"
+                        class="search-clear-btn"
+                        title="Clear search"
+                        aria-label="Clear search"
+                    >✕</button>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+    <!-- ================= TRENDING STRIP ================= -->
+
+    <section class="trending-section" aria-label="Trending notes">
+
+        <div class="trending-inner">
+
+            <span class="trending-label">🔥 Trending</span>
+
+            <div class="trending-scroll" id="trending-scroll" role="list">
+
+                <!-- Skeleton placeholders while loading -->
+                <div class="trending-skeleton" aria-hidden="true"></div>
+                <div class="trending-skeleton" aria-hidden="true"></div>
+                <div class="trending-skeleton" aria-hidden="true"></div>
+                <div class="trending-skeleton" aria-hidden="true"></div>
+                <div class="trending-skeleton" aria-hidden="true"></div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+    <!-- ================= MAIN LAYOUT ================= -->
+
+    <main class="search-main">
+
+        <!-- ---- Sidebar ---- -->
+
+        <aside class="search-sidebar" id="search-sidebar" aria-label="Search filters">
+
+            <!-- Categories -->
+            <div class="sidebar-card">
+
+                <h2 class="sidebar-title">📚 Categories</h2>
+
+                <ul class="category-list" id="category-list" role="list">
+
+                    <li>
+                        <button class="category-btn active" data-id="" id="cat-all">
+                            All Subjects
+                        </button>
+                    </li>
+
+                </ul>
+
+            </div>
+
+            <!-- Sort -->
+            <div class="sidebar-card">
+
+                <h2 class="sidebar-title">↕️ Sort By</h2>
+
+                <select id="sort-select" class="sort-select" aria-label="Sort search results">
+
+                    <option value="newest">Newest First</option>
+
+                    <option value="oldest">Oldest First</option>
+
+                    <option value="most_downloaded">Most Downloaded</option>
+
+                    <option value="most_viewed">Most Viewed</option>
+
+                </select>
+
+            </div>
+
+            <!-- Popular Tags -->
+            <div class="sidebar-card">
+
+                <h2 class="sidebar-title">🏷️ Popular Tags</h2>
+
+                <div class="tags-container" id="tags-container" role="list">
+                    <!-- Populated by search.js -->
+                </div>
+
+            </div>
+
+        </aside>
+
+        <!-- ---- Results Area ---- -->
+
+        <section class="search-results" aria-label="Search results">
+
+            <!-- Results header -->
+            <div class="results-header">
+
+                <span class="results-count" id="results-count" aria-live="polite">
+                    Loading notes...
+                </span>
+
+                <button
+                    class="filter-toggle-btn"
+                    id="filter-toggle-btn"
+                    aria-controls="search-sidebar"
+                    aria-expanded="false"
+                >
+                    ⚙️ Filters
+                </button>
+
+            </div>
+
+            <!-- Active filter tags -->
+            <div class="active-filters" id="active-filters" aria-label="Active filters"></div>
+
+            <!-- Loading state -->
+            <div class="loading-state" id="loading-state" role="status" aria-label="Loading">
+
+                <div class="spinner"></div>
+
+                <p>Searching notes...</p>
+
+            </div>
+
+            <!-- Results grid -->
+            <div class="results-grid" id="results-grid" role="list"></div>
+
+            <!-- Empty state -->
+            <div class="empty-state" id="empty-state" hidden role="status">
+
+                <div class="empty-icon">📭</div>
+
+                <h3>No notes found</h3>
+
+                <p>Try different keywords, or clear some filters.</p>
+
+            </div>
+
+            <!-- Pagination -->
+            <nav class="pagination" id="pagination" aria-label="Results pages"></nav>
+
+        </section>
+
+    </main>
+
+    <!-- ================= FOOTER ================= -->
+
+    <footer>
+
+        <p>© 2026 EduShare. All Rights Reserved.</p>
+
+    </footer>
+
+    <script src="/js/main.js"></script>
+
+    <script src="/js/search.js"></script>
+
+</body>
+
+</html>
