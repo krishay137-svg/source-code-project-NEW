@@ -21,59 +21,17 @@ exports.showLogin = (req, res) => {
 
 /* ======================================================
    POST /register
+   Validation is handled upstream by registerValidators.
+   Controller only handles business logic.
 ====================================================== */
 
 exports.register = (req, res) => {
 
-    const { full_name, email, password, confirm_password } = req.body;
-
-    /* --- Basic server-side validation --- */
-
-    if (!full_name || !email || !password || !confirm_password) {
-
-        return res.redirect(
-            "/register?error=" + encodeURIComponent("All fields are required.")
-        );
-
-    }
-
-    if (full_name.trim().length < 2) {
-
-        return res.redirect(
-            "/register?error=" + encodeURIComponent("Full name must be at least 2 characters.")
-        );
-
-    }
-
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-
-    if (!emailRegex.test(email)) {
-
-        return res.redirect(
-            "/register?error=" + encodeURIComponent("Please enter a valid email address.")
-        );
-
-    }
-
-    if (password.length < 8) {
-
-        return res.redirect(
-            "/register?error=" + encodeURIComponent("Password must be at least 8 characters.")
-        );
-
-    }
-
-    if (password !== confirm_password) {
-
-        return res.redirect(
-            "/register?error=" + encodeURIComponent("Passwords do not match.")
-        );
-
-    }
+    const { full_name, email, password } = req.body;
 
     /* --- Check email uniqueness --- */
 
-    User.findByEmail(email.toLowerCase(), (err, results) => {
+    User.findByEmail(email, (err, results) => {
 
         if (err) {
 
@@ -111,7 +69,7 @@ exports.register = (req, res) => {
 
             const userData = {
                 full_name: full_name.trim(),
-                email: email.toLowerCase(),
+                email,
                 password: hashedPassword
             };
 
@@ -141,35 +99,17 @@ exports.register = (req, res) => {
 
 /* ======================================================
    POST /login
+   Validation is handled upstream by loginValidators.
+   Controller only handles business logic.
 ====================================================== */
 
 exports.login = (req, res) => {
 
     const { email, password } = req.body;
 
-    /* --- Basic server-side validation --- */
-
-    if (!email || !password) {
-
-        return res.redirect(
-            "/login?error=" + encodeURIComponent("Email and password are required.")
-        );
-
-    }
-
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-
-    if (!emailRegex.test(email)) {
-
-        return res.redirect(
-            "/login?error=" + encodeURIComponent("Please enter a valid email address.")
-        );
-
-    }
-
     /* --- Look up user by email --- */
 
-    User.findByEmail(email.toLowerCase(), (err, results) => {
+    User.findByEmail(email, (err, results) => {
 
         if (err) {
 

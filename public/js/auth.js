@@ -151,8 +151,8 @@
                 valid = false;
             }
 
-            if (password.length < 8) {
-                showFieldError("password", "Password must be at least 8 characters.");
+            if (password.length < 8 || !/[A-Z]/.test(password) || !/[0-9]/.test(password)) {
+                showFieldError("password", "Password must be at least 8 characters, include one uppercase letter and one number.");
                 valid = false;
             }
 
