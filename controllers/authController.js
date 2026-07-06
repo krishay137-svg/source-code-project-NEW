@@ -140,12 +140,106 @@ exports.register = (req, res) => {
 };
 
 /* ======================================================
-   POST /login   — implemented in Commit 3
+   POST /login
 ====================================================== */
 
 exports.login = (req, res) => {
 
-    res.status(501).send("Login will be implemented in Commit 3.");
+    const { email, password } = req.body;
+
+    /* --- Basic server-side validation --- */
+
+    if (!email || !password) {
+
+        return res.redirect(
+            "/login?error=" + encodeURIComponent("Email and password are required.")
+        );
+
+    }
+
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+    if (!emailRegex.test(email)) {
+
+        return res.redirect(
+            "/login?error=" + encodeURIComponent("Please enter a valid email address.")
+        );
+
+    }
+
+    /* --- Look up user by email --- */
+
+    User.findByEmail(email.toLowerCase(), (err, results) => {
+
+        if (err) {
+
+            console.error("Database error during login (findByEmail):", err);
+
+            return res.redirect(
+                "/login?error=" + encodeURIComponent("An unexpected error occurred. Please try again.")
+            );
+
+        }
+
+        if (results.length === 0) {
+
+            /* Use a generic message to avoid user enumeration */
+
+            return res.redirect(
+                "/login?error=" + encodeURIComponent("Invalid email or password.")
+            );
+
+        }
+
+        const user = results[0];
+
+        /* --- Compare password with stored hash --- */
+
+        bcrypt.compare(password, user.password, (compareErr, isMatch) => {
+
+            if (compareErr) {
+
+                console.error("bcrypt error during login:", compareErr);
+
+                return res.redirect(
+                    "/login?error=" + encodeURIComponent("An unexpected error occurred. Please try again.")
+                );
+
+            }
+
+            if (!isMatch) {
+
+                return res.redirect(
+                    "/login?error=" + encodeURIComponent("Invalid email or password.")
+                );
+
+            }
+
+            /* --- Store user in session --- */
+
+            req.session.userId = user.id;
+            req.session.userName = user.full_name;
+
+            req.session.save((saveErr) => {
+
+                if (saveErr) {
+
+                    console.error("Session save error during login:", saveErr);
+
+                    return res.redirect(
+                        "/login?error=" + encodeURIComponent("An unexpected error occurred. Please try again.")
+                    );
+
+                }
+
+                /* Redirect to dashboard — implemented in Part 4 */
+                return res.redirect("/");
+
+            });
+
+        });
+
+    });
 
 };
 
