@@ -15,7 +15,7 @@ class Tag {
      */
     static getAll(callback) {
 
-        database.query(
+        database.all(
             "SELECT id, name FROM tags ORDER BY name ASC",
             [],
             callback
@@ -40,7 +40,7 @@ class Tag {
             ORDER  BY t.name ASC
         `;
 
-        database.query(query, [parseInt(noteId)], callback);
+        database.all(query, [parseInt(noteId)], callback);
 
     }
 
@@ -64,7 +64,7 @@ class Tag {
             LIMIT    ?
         `;
 
-        database.query(query, [parseInt(limit)], callback);
+        database.all(query, [parseInt(limit)], callback);
 
     }
 
