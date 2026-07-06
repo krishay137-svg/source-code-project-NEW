@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Register | EduShare</title>
+
+    <link rel="stylesheet" href="/css/style.css">
+
+</head>
+
+<body>
+
+    <header>
+
+        <nav class="navbar">
+
+            <div class="logo">
+
+                <a href="/">EduShare</a>
+
+            </div>
+
+        </nav>
+
+    </header>
+
+    <section class="hero">
+
+        <div class="hero-content">
+
+            <h1>Create Account</h1>
+
+            <form action="/register" method="POST">
+
+                <input type="text" name="full_name" placeholder="Full Name" required>
+
+                <br><br>
+
+                <input type="email" name="email" placeholder="Email" required>
+
+                <br><br>
+
+                <input type="password" name="password" placeholder="Password" required>
+
+                <br><br>
+
+                <button class="btn primary-btn" type="submit">
+
+                    Create Account
+
+                </button>
+
+            </form>
+
+            <p>
+
+                Already have an account?
+
+                <a href="/login">
+
+                    Login
+
+                </a>
+
+            </p>
+
+        </div>
+
+    </section>
+
+    <script src="/js/main.js"></script>
+
+</body>
+
+</html>

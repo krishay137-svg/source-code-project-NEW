@@ -1,19 +1,21 @@
-
 require("dotenv").config();
-console.log(process.env.SESSION_SECRET);
+
 const express = require("express");
 const path = require("path");
 const session = require("express-session");
 const cookieParser = require("cookie-parser");
 const morgan = require("morgan");
+
+require("./config/database");
+
 const indexRoutes = require("./routes/indexRoutes");
-const database = require("./config/database");
+const authRoutes = require("./routes/authRoutes");
 
 const app = express();
 
 const PORT = process.env.PORT || 3000;
 
-/* -------------------------- Middleware -------------------------- */
+/* ---------------- Middleware ---------------- */
 
 app.use(morgan("dev"));
 
@@ -23,31 +25,48 @@ app.use(express.json());
 
 app.use(cookieParser());
 
-app.use(
-    session({
-        secret: process.env.SESSION_SECRET,
-        resave: false,
-        saveUninitialized: false
-    })
-);
+app.use(session({
+
+    secret: process.env.SESSION_SECRET,
+
+    resave: false,
+
+    saveUninitialized: false
+
+}));
 
 app.use(express.static(path.join(__dirname, "public")));
 
-app.use("/uploads", express.static(path.join(__dirname, "uploads")));
+app.use(
+    "/uploads",
+    express.static(path.join(__dirname, "uploads"))
+);
+
+/* ---------------- Routes ---------------- */
 
 app.use("/", indexRoutes);
 
-/* -------------------------- 404 Handler -------------------------- */
+app.use("/", authRoutes);
+
+/* ---------------- 404 ---------------- */
 
 app.use((req, res) => {
-    res.status(404).sendFile(path.join(__dirname, "views", "404.html"));
+
+    res.status(404).sendFile(
+
+        path.join(__dirname, "views", "404.html")
+
+    );
+
 });
 
-/* -------------------------- Start Server ------------------------- */
+/* ---------------- Server ---------------- */
 
 app.listen(PORT, () => {
+
     console.log("=====================================");
     console.log("EduShare Server Running Successfully");
     console.log("=====================================");
     console.log(`Server : http://localhost:${PORT}`);
+
 });
