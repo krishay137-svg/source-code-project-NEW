@@ -10,6 +10,8 @@ require("./config/database");
 
 const indexRoutes = require("./routes/indexRoutes");
 const authRoutes = require("./routes/authRoutes");
+const noteRoutes = require("./routes/noteRoutes");
+const { errorHandler, notFound } = require("./middleware/errorMiddleware");
 
 const app = express();
 
@@ -48,17 +50,13 @@ app.use("/", indexRoutes);
 
 app.use("/", authRoutes);
 
-/* ---------------- 404 ---------------- */
+app.use("/", noteRoutes);
 
-app.use((req, res) => {
+/* ---------------- Error Handling ---------------- */
 
-    res.status(404).sendFile(
+app.use(notFound);
 
-        path.join(__dirname, "views", "404.html")
-
-    );
-
-});
+app.use(errorHandler);
 
 /* ---------------- Server ---------------- */
 
