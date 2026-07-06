@@ -8,8 +8,9 @@ const morgan = require("morgan");
 
 require("./config/database");
 
-const indexRoutes = require("./routes/indexRoutes");
-const authRoutes = require("./routes/authRoutes");
+const indexRoutes  = require("./routes/indexRoutes");
+const authRoutes   = require("./routes/authRoutes");
+const searchRoutes = require("./routes/searchRoutes");
 
 const app = express();
 
@@ -47,6 +48,8 @@ app.use(
 app.use("/", indexRoutes);
 
 app.use("/", authRoutes);
+
+app.use("/", searchRoutes);
 
 /* ---------------- 404 ---------------- */
 
