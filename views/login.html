@@ -5,8 +5,9 @@
 
     <meta charset="UTF-8">
 
-    <meta name="viewport"
-          content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta name="description" content="Login to your EduShare account to access and share study notes.">
 
     <title>Login | EduShare</title>
 
@@ -16,71 +17,103 @@
 
 <body>
 
-<header>
+    <header>
 
-<nav class="navbar">
+        <nav class="navbar">
 
-<div class="logo">
+            <div class="logo">
 
-<a href="/">EduShare</a>
+                <a href="/">EduShare</a>
 
-</div>
+            </div>
 
-</nav>
+            <ul class="nav-links">
 
-</header>
+                <li><a href="/register">Register</a></li>
 
-<section class="hero">
+            </ul>
 
-<div class="hero-content">
+        </nav>
 
-<h1>Login</h1>
+    </header>
 
-<form action="/login" method="POST">
+    <main class="auth-page">
 
-<input
-type="email"
-name="email"
-placeholder="Email"
-required>
+        <div class="auth-card">
 
-<br><br>
+            <div class="auth-header">
 
-<input
-type="password"
-name="password"
-placeholder="Password"
-required>
+                <h1>Welcome Back</h1>
 
-<br><br>
+                <p>Sign in to continue learning and sharing</p>
 
-<button
-class="btn primary-btn"
-type="submit">
+            </div>
 
-Login
+            <div id="auth-alert" class="auth-alert" role="alert" aria-live="polite"></div>
 
-</button>
+            <form id="login-form" class="auth-form" action="/login" method="POST" novalidate>
 
-</form>
+                <div class="form-group">
 
-<p>
+                    <label for="email">Email Address</label>
 
-Don't have an account?
+                    <input
+                        id="email"
+                        type="email"
+                        name="email"
+                        placeholder="Enter your email"
+                        autocomplete="email"
+                        required
+                    >
 
-<a href="/register">
+                    <span class="field-error" id="email-error"></span>
 
-Register
+                </div>
 
-</a>
+                <div class="form-group">
 
-</p>
+                    <label for="password">Password</label>
 
-</div>
+                    <div class="input-wrapper">
 
-</section>
+                        <input
+                            id="password"
+                            type="password"
+                            name="password"
+                            placeholder="Enter your password"
+                            autocomplete="current-password"
+                            required
+                        >
 
-<script src="/js/main.js"></script>
+                        <button type="button" class="toggle-password" aria-label="Show or hide password" data-target="password">&#128065;</button>
+
+                    </div>
+
+                    <span class="field-error" id="password-error"></span>
+
+                </div>
+
+                <button id="login-btn" class="btn auth-btn" type="submit">
+
+                    Login
+
+                </button>
+
+            </form>
+
+            <p class="auth-switch">
+
+                Don't have an account? <a href="/register">Register here</a>
+
+            </p>
+
+        </div>
+
+    </main>
+
+    <script src="/js/auth.js"></script>
+
+    <script src="/js/main.js"></script>
 
 </body>
 

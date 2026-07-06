@@ -11,17 +11,13 @@ class User {
         `;
 
         database.query(
-
             query,
-
             [
                 userData.full_name,
                 userData.email,
                 userData.password
             ],
-
             callback
-
         );
 
     }
@@ -29,13 +25,9 @@ class User {
     static findByEmail(email, callback) {
 
         database.query(
-
             "SELECT * FROM users WHERE email = ?",
-
             [email],
-
             callback
-
         );
 
     }
@@ -43,12 +35,32 @@ class User {
     static findById(id, callback) {
 
         database.query(
-
             "SELECT * FROM users WHERE id = ?",
-
             [id],
-
             callback
+        );
+
+    }
+
+    static emailExists(email, callback) {
+
+        database.query(
+
+            "SELECT id FROM users WHERE email = ?",
+
+            [email],
+
+            (error, results) => {
+
+                if (error) {
+
+                    return callback(error);
+
+                }
+
+                callback(null, results.length > 0);
+
+            }
 
         );
 
