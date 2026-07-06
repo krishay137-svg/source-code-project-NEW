@@ -183,7 +183,7 @@ exports.login = (req, res) => {
 
         if (results.length === 0) {
 
-            /* Use a generic message to avoid user enumeration */
+            /* Generic message — prevents user enumeration */
 
             return res.redirect(
                 "/login?error=" + encodeURIComponent("Invalid email or password.")
@@ -215,10 +215,13 @@ exports.login = (req, res) => {
 
             }
 
-            /* --- Store user in session --- */
+            /* --- Store user object in session --- */
 
-            req.session.userId = user.id;
-            req.session.userName = user.full_name;
+            req.session.user = {
+                id: user.id,
+                full_name: user.full_name,
+                email: user.email
+            };
 
             req.session.save((saveErr) => {
 
@@ -232,7 +235,7 @@ exports.login = (req, res) => {
 
                 }
 
-                /* Redirect to dashboard — implemented in Part 4 */
+                /* Redirect to home — dashboard implemented in Part 4 */
                 return res.redirect("/");
 
             });
@@ -244,11 +247,23 @@ exports.login = (req, res) => {
 };
 
 /* ======================================================
-   GET /logout   — implemented in Commit 4
+   GET /logout
 ====================================================== */
 
 exports.logout = (req, res) => {
 
-    res.status(501).send("Logout will be implemented in Commit 4.");
+    req.session.destroy((err) => {
+
+        if (err) {
+
+            console.error("Session destroy error during logout:", err);
+
+        }
+
+        res.clearCookie("connect.sid");
+
+        return res.redirect("/");
+
+    });
 
 };
