@@ -309,6 +309,20 @@ Potential future improvements include:
 
 ---
 
+# Contributing
+
+Contributions are welcome! Please follow these steps:
+
+1. Fork the repository
+2. Create a feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit your changes (`git commit -m 'Add amazing feature'`)
+4. Push to the branch (`git push origin feature/amazing-feature`)
+5. Open a Pull Request
+
+See [CONTRIBUTORS.md](CONTRIBUTORS.md) for project team details.
+
+---
+
 # Acknowledgements
 
 We would like to thank everyone who contributed to the development of EduShare. This project was created to encourage collaborative learning and make educational resources more accessible to students.
