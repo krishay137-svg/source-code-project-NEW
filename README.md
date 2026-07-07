@@ -1,5 +1,10 @@
 # EduShare
 
+![Node.js](https://img.shields.io/badge/Node.js-339933?style=for-the-badge&logo=nodedotjs&logoColor=white)
+![Express](https://img.shields.io/badge/Express.js-000000?style=for-the-badge&logo=express&logoColor=white)
+![MySQL](https://img.shields.io/badge/MySQL-4479A1?style=for-the-badge&logo=mysql&logoColor=white)
+![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black)
+
 A collaborative E-Learning Notes Sharing Platform that enables students to upload, discover, organize, and share study materials in a secure and user-friendly environment. EduShare promotes collaborative learning by allowing users to contribute educational resources, interact with the community, and access high-quality notes from fellow students.
 
 ---
