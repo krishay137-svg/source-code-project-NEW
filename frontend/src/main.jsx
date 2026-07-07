@@ -9,6 +9,8 @@ import Register from './pages/Register';
 import NoteDetail from './pages/NoteDetail';
 import Upload from './pages/Upload';
 import Profile from './pages/Profile';
+import Dashboard from './pages/Dashboard';
+import EditProfile from './pages/EditProfile';
 import './index.css';
 
 createRoot(document.getElementById('root')).render(
@@ -23,6 +25,8 @@ createRoot(document.getElementById('root')).render(
             <Route path="/notes/:id" element={<NoteDetail />} />
             <Route path="/upload" element={<Upload />} />
             <Route path="/profile" element={<Profile />} />
+            <Route path="/dashboard" element={<Dashboard />} />
+            <Route path="/profile/edit" element={<EditProfile />} />
           </Route>
         </Routes>
       </ToastProvider>

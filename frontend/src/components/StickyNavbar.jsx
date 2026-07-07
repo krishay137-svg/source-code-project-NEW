@@ -26,6 +26,7 @@ export default function StickyNavbar() {
           <div className="hidden md:flex items-center gap-8">
             <NavLink to="/" className={linkClass} end>{renderActiveIndicator({ isActive: false })}Browse</NavLink>
             <NavLink to="/upload" className={linkClass}>{renderActiveIndicator({ isActive: false })}Upload</NavLink>
+            <NavLink to="/dashboard" className={linkClass}>{renderActiveIndicator({ isActive: false })}Dashboard</NavLink>
             <NavLink to="/profile" className={linkClass}>{renderActiveIndicator({ isActive: false })}Profile</NavLink>
           </div>
 
@@ -62,6 +63,7 @@ export default function StickyNavbar() {
           <div className="md:hidden pb-4 animate-slide-down bg-white/80 backdrop-blur-xl rounded-3xl p-4 mb-2 space-y-3">
             <NavLink to="/" onClick={() => setMobileOpen(false)} className="block text-sm font-medium text-neutral-700 hover:text-brand-600">Browse</NavLink>
             <NavLink to="/upload" onClick={() => setMobileOpen(false)} className="block text-sm font-medium text-neutral-700 hover:text-brand-600">Upload</NavLink>
+            <NavLink to="/dashboard" onClick={() => setMobileOpen(false)} className="block text-sm font-medium text-neutral-700 hover:text-brand-600">Dashboard</NavLink>
             <NavLink to="/profile" onClick={() => setMobileOpen(false)} className="block text-sm font-medium text-neutral-700 hover:text-brand-600">Profile</NavLink>
             <hr className="border-neutral-200" />
             <Link to="/login" onClick={() => setMobileOpen(false)} className="block text-sm font-medium text-neutral-500 hover:text-neutral-900">Sign In</Link>
