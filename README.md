@@ -1,65 +1,126 @@
 # EduShare
 
-A collaborative E-Learning Notes Sharing Platform built using Node.js, Express.js, MySQL, HTML, CSS and JavaScript.
+A collaborative E-Learning Notes Sharing Platform that enables students to upload, discover, organize, and share study materials in a secure and user-friendly environment. EduShare promotes collaborative learning by allowing users to contribute educational resources, interact with the community, and access high-quality notes from fellow students.
 
-EduShare enables students to upload, discover, download and discuss study materials while encouraging collaborative learning.
+---
+
+## Overview
+
+EduShare is a full-stack web application developed using Node.js, Express.js, MySQL, HTML, CSS, and JavaScript. The platform provides students with a centralized repository for academic resources while encouraging peer-to-peer learning through ratings, comments, bookmarks, and personalized dashboards.
+
+The application follows a modular MVC architecture and is designed with scalability, security, and maintainability in mind.
 
 ---
 
 ## Features
 
-### Current (Part 1)
+### User Authentication
 
-- Project foundation
-- Express.js server
-- MySQL database connection
-- Landing page
+- Secure user registration and login
+- Password hashing using bcrypt
+- Session-based authentication
+- Authentication middleware
+- Input validation and sanitization
+- Secure logout functionality
+
+### Notes Management
+
+- Upload study materials
+- Download notes
+- Edit uploaded notes
+- Delete notes
+- File type validation
+- Organized file storage
+
+### Dashboard & Profiles
+
+- Personalized dashboard
+- User profile management
+- Profile picture upload
+- Contribution statistics
+- Download history
+- Activity overview
+
+### Search & Discovery
+
+- Search notes by keyword
+- Subject-based filtering
+- Category filtering
+- Tag-based search
+- Trending notes
+- Related note recommendations
+
+### Community Features
+
+- Rate uploaded notes
+- Comment on study materials
+- Bookmark favorite notes
+- Report inappropriate content
+- Notification system
+
+### Leaderboard & Analytics
+
+- Top contributors leaderboard
+- Most downloaded notes
+- Highest-rated notes
+- Platform statistics
+- User contribution analytics
+
+### Admin Panel
+
+- Administrator authentication
+- User management
+- Note moderation
+- Report management
+- Platform monitoring
+
+### User Experience
+
+- Fully responsive design
+- Modern user interface
 - Custom 404 page
-- Modular routing
-- Environment configuration
-- Repository configuration
+- Dark mode
+- Loading animations
+- Toast notifications
 
-### Planned
+### Security
 
-- User Authentication
-- Notes Upload & Download
-- Dashboard & User Profiles
-- Search & Discovery
-- Ratings & Comments
-- Bookmarks
-- Notifications
-- Leaderboard
-- Admin Panel
-- Responsive Design
-- Security Improvements
+- Password hashing
+- Session management
+- Input validation
+- Data sanitization
+- Secure file uploads
+- Protected routes
+- SQL injection prevention
+- Error handling
 
 ---
 
-## Technology Stack
+# Technology Stack
 
-### Backend
+## Backend
 
 - Node.js
 - Express.js
 
-### Database
+## Database
 
 - MySQL
 
-### Frontend
+## Frontend
 
 - HTML5
 - CSS3
-- JavaScript (Vanilla)
+- Vanilla JavaScript
 
-### Version Control
+## Version Control
 
 - Git
 - GitHub
 
 ---
 
-## Project Structure
+# Project Structure
 
 ```
 EduShare/
@@ -71,8 +132,15 @@ EduShare/
 ├── middleware/
 ├── models/
 ├── public/
+│   ├── css/
+│   ├── images/
+│   └── js/
+│
 ├── routes/
 ├── uploads/
+│   ├── notes/
+│   └── profilePictures/
+│
 ├── utils/
 ├── views/
 │
@@ -86,21 +154,29 @@ EduShare/
 
 ---
 
-## Installation
+# Installation
 
-Clone the repository
+## Clone the Repository
 
 ```bash
-git clone <repository-url>
+git clone https://github.com/your-username/EduShare.git
+
+cd EduShare
 ```
 
-Install dependencies
+---
+
+## Install Dependencies
 
 ```bash
 npm install
 ```
 
-Create a `.env` file
+---
+
+## Configure Environment Variables
+
+Create a `.env` file in the project root.
 
 ```env
 PORT=3000
@@ -111,29 +187,102 @@ DB_USER=root
 DB_PASSWORD=your_password
 DB_NAME=edushare
 
-SESSION_SECRET=your_secret_key
+SESSION_SECRET=your_secure_session_secret
 ```
 
-Start the application
+---
+
+## Create the Database
+
+Execute the SQL schema using MySQL.
+
+```sql
+SOURCE database/schema.sql;
+```
+
+---
+
+## Start the Application
+
+Development
 
 ```bash
 npm run dev
 ```
 
+Production
+
+```bash
+npm start
+```
+
+The application will be available at:
+
+```
+http://localhost:3000
+```
+
 ---
 
-## Project Status
+# Database Schema
 
-Current Development Stage
+The application uses the following database tables:
 
-**Part 1 — Project Setup & Landing Page**
-
-Status:
-
-**Completed**
+- users
+- subjects
+- notes
+- tags
+- note_tags
+- ratings
+- comments
+- bookmarks
+- notifications
+- downloads
+- views
+- reports
 
 ---
 
-## License
+# Application Workflow
 
-This project is being developed for educational purposes.
+1. Users create an account.
+2. Secure authentication grants access to the platform.
+3. Users upload academic resources.
+4. Study materials become searchable by subject, category, and tags.
+5. Other users can download, bookmark, rate, and comment on notes.
+6. The leaderboard rewards active contributors.
+7. Administrators moderate content and manage reports.
+
+---
+
+# Team
+
+| Member | Responsibility |
+|---------|----------------|
+| Krishay | Project Foundation & Authentication |
+| Nandan Kumar | Notes Management |
+| Ashlyn | Dashboard & Profiles |
+| Aditya | Search & Discovery |
+| Nihar | Community Features |
+
+---
+
+# Future Enhancements
+
+Potential future improvements include:
+
+- Mobile application
+- Real-time chat
+- AI-powered note recommendations
+- OCR for scanned documents
+- Cloud storage integration
+- Email verification
+- Two-factor authentication
+- Advanced analytics
+- REST API for third-party integrations
+
+---
+
+# Acknowledgements
+
+We would like to thank everyone who contributed to the development of EduShare. This project was created to encourage collaborative learning and make educational resources more accessible to students.
