@@ -1,27 +1,44 @@
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useToast } from '../context/ToastContext';
 
 export default function Register() {
-  const [step, setStep] = useState(1);
-  const [form, setForm] = useState({ email: '', otp: '', full_name: '', password: '' });
+  const [form, setForm] = useState({ email: '', full_name: '', password: '' });
+  const [loading, setLoading] = useState(false);
   const { addToast } = useToast();
+  const navigate = useNavigate();
 
   const handleChange = (e) => setForm({ ...form, [e.target.name]: e.target.value });
 
-  const handleEmailSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    setStep(2);
-  };
+    setLoading(true);
 
-  const handleOtpSubmit = (e) => {
-    e.preventDefault();
-    setStep(3);
-  };
+    try {
+      const response = await fetch('/api/auth/register', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          full_name: form.full_name,
+          email: form.email,
+          password: form.password
+        })
+      });
 
-  const handleProfileSubmit = (e) => {
-    e.preventDefault();
-    addToast('Account created successfully! Please log in.', 'success');
+      const data = await response.json();
+
+      if (response.ok) {
+        addToast(data.message || 'Account created successfully! Redirecting to profile...', 'success');
+        navigate('/profile');
+      } else {
+        addToast(data.error || 'Failed to create account.', 'error');
+      }
+    } catch (err) {
+      console.error(err);
+      addToast('Network error occurred. Please try again.', 'error');
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -32,130 +49,58 @@ export default function Register() {
         <div className="hero-blob w-64 h-64 bg-amber-200/30 -bottom-20 -right-20" />
 
         <div className="glass-card rounded-2xl p-8 sm:p-10 w-full max-w-md relative z-10 animate-scale-in">
-          {/* Progress Indicator */}
-          <div className="flex items-center justify-center gap-2 mb-8">
-            {[1, 2, 3].map((s) => (
-              <div key={s} className="flex items-center gap-2">
-                <div className={`w-8 h-8 rounded-full flex items-center justify-center text-xs font-bold transition-all duration-300 ${step >= s ? 'bg-brand-600 text-white' : 'bg-neutral-100 text-neutral-400'}`}>
-                  {step > s ? (
-                    <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
-                      <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
-                    </svg>
-                  ) : (
-                    s
-                  )}
-                </div>
-                {s < 3 && <div className={`w-8 sm:w-12 h-0.5 rounded transition-all duration-300 ${step > s ? 'bg-brand-600' : 'bg-neutral-200'}`} />}
-              </div>
-            ))}
+          
+          <div className="text-center mb-8">
+            <h1 className="text-2xl sm:text-3xl font-bold gradient-text mb-2">Create Account</h1>
+            <p className="text-neutral-500 text-sm">Join NotesHub to share and find study materials</p>
           </div>
-
-          {step === 1 && (
-            <>
-              <div className="text-center mb-8">
-                <h1 className="text-2xl sm:text-3xl font-bold gradient-text mb-2">Get Started</h1>
-                <p className="text-neutral-500 text-sm">Enter your email to create an account</p>
-              </div>
-              <form onSubmit={handleEmailSubmit} className="space-y-5">
-                <div>
-                  <label className="block text-sm font-medium text-neutral-700 mb-1.5">Email</label>
-                  <input
-                    type="email"
-                    name="email"
-                    value={form.email}
-                    onChange={handleChange}
-                    placeholder="you@example.com"
-                    className="input-modern"
-                    required
-                  />
-                </div>
-                <button
-                  type="submit"
-                  className="w-full bg-gradient-to-r from-brand-600 to-brand-700 hover:from-brand-700 hover:to-brand-800 text-white font-semibold py-3 rounded-xl transition-all duration-200"
-                >
-                  Send OTP
-                </button>
-              </form>
-            </>
-          )}
-
-          {step === 2 && (
-            <>
-              <div className="text-center mb-8">
-                <h1 className="text-2xl sm:text-3xl font-bold gradient-text mb-2">Verify Email</h1>
-                <p className="text-neutral-500 text-sm">Enter the OTP sent to {form.email}</p>
-              </div>
-              <form onSubmit={handleOtpSubmit} className="space-y-5">
-                <div>
-                  <label className="block text-sm font-medium text-neutral-700 mb-1.5">OTP</label>
-                  <input
-                    type="text"
-                    name="otp"
-                    value={form.otp}
-                    onChange={handleChange}
-                    placeholder="Enter OTP"
-                    className="input-modern text-center text-lg tracking-widest"
-                    maxLength={6}
-                    required
-                  />
-                </div>
-                <button
-                  type="submit"
-                  className="w-full bg-gradient-to-r from-brand-600 to-brand-700 hover:from-brand-700 hover:to-brand-800 text-white font-semibold py-3 rounded-xl transition-all duration-200"
-                >
-                  Verify
-                </button>
-              </form>
-              <button
-                onClick={() => setStep(1)}
-                className="w-full text-center text-sm text-neutral-500 hover:text-neutral-700 mt-3 transition-colors"
-              >
-                Back to email
-              </button>
-            </>
-          )}
-
-          {step === 3 && (
-            <>
-              <div className="text-center mb-8">
-                <h1 className="text-2xl sm:text-3xl font-bold gradient-text mb-2">Complete Profile</h1>
-                <p className="text-neutral-500 text-sm">Set up your account details</p>
-              </div>
-              <form onSubmit={handleProfileSubmit} className="space-y-5">
-                <div>
-                  <label className="block text-sm font-medium text-neutral-700 mb-1.5">Full Name</label>
-                  <input
-                    type="text"
-                    name="full_name"
-                    value={form.full_name}
-                    onChange={handleChange}
-                    placeholder="John Doe"
-                    className="input-modern"
-                    required
-                  />
-                </div>
-                <div>
-                  <label className="block text-sm font-medium text-neutral-700 mb-1.5">Password</label>
-                  <input
-                    type="password"
-                    name="password"
-                    value={form.password}
-                    onChange={handleChange}
-                    placeholder="At least 8 characters"
-                    className="input-modern"
-                    minLength={8}
-                    required
-                  />
-                </div>
-                <button
-                  type="submit"
-                  className="w-full bg-gradient-to-r from-brand-600 to-brand-700 hover:from-brand-700 hover:to-brand-800 text-white font-semibold py-3 rounded-xl transition-all duration-200"
-                >
-                  Create Account
-                </button>
-              </form>
-            </>
-          )}
+          
+          <form onSubmit={handleSubmit} className="space-y-5">
+            <div>
+              <label className="block text-sm font-medium text-neutral-700 mb-1.5">Full Name</label>
+              <input
+                type="text"
+                name="full_name"
+                value={form.full_name}
+                onChange={handleChange}
+                placeholder="John Doe"
+                className="input-modern"
+                required
+              />
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-neutral-700 mb-1.5">Email</label>
+              <input
+                type="email"
+                name="email"
+                value={form.email}
+                onChange={handleChange}
+                placeholder="you@example.com"
+                className="input-modern"
+                required
+              />
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-neutral-700 mb-1.5">Password</label>
+              <input
+                type="password"
+                name="password"
+                value={form.password}
+                onChange={handleChange}
+                placeholder="At least 8 characters"
+                className="input-modern"
+                minLength={8}
+                required
+              />
+            </div>
+            <button
+              type="submit"
+              disabled={loading}
+              className={`w-full bg-gradient-to-r from-brand-600 to-brand-700 hover:from-brand-700 hover:to-brand-800 text-white font-semibold py-3 rounded-xl transition-all duration-200 ${loading ? 'opacity-70 cursor-not-allowed' : ''}`}
+            >
+              {loading ? 'Creating Account...' : 'Create Account'}
+            </button>
+          </form>
 
           <p className="text-center text-sm text-neutral-500 mt-6">
             Already have an account?{' '}
