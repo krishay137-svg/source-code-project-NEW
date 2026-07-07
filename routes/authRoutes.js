@@ -21,11 +21,21 @@ router.get(
 router.post(
     "/register",
     isGuest,
-    registerValidators,
-    handleValidationErrors("/register"),
-    authController.register
+    /* API endpoints for SPA frontend */
+    router.post(
+        "/api/auth/register",
+        authController.apiRegister
+    );
+
+    router.get(
+        "/api/auth/me",
+        authController.me
+    );
+    "/api/auth/me",
+    authController.me
 );
 
+>>>>>>> 1aab8b5 (routes(auth): add /api/auth/me; remove OTP routes)
 /* ---------- Login ---------- */
 
 router.get(
