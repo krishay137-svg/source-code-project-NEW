@@ -212,3 +212,111 @@ CREATE TABLE IF NOT EXISTS notes (
     FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
 
 );
+
+-- =====================================================
+-- Part 6 — Community Features
+-- =====================================================
+
+CREATE TABLE IF NOT EXISTS ratings (
+
+    id         INTEGER PRIMARY KEY AUTOINCREMENT,
+
+    note_id    INTEGER NOT NULL,
+
+    user_id    INTEGER NOT NULL,
+
+    rating     INTEGER NOT NULL CHECK (rating BETWEEN 1 AND 5),
+
+    created_at TEXT DEFAULT (datetime('now')),
+
+    updated_at TEXT DEFAULT (datetime('now')),
+
+    UNIQUE (note_id, user_id),
+
+    FOREIGN KEY (note_id) REFERENCES notes(id) ON DELETE CASCADE,
+
+    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
+
+);
+
+CREATE TABLE IF NOT EXISTS comments (
+
+    id         INTEGER PRIMARY KEY AUTOINCREMENT,
+
+    note_id    INTEGER NOT NULL,
+
+    user_id    INTEGER NOT NULL,
+
+    body       TEXT NOT NULL,
+
+    created_at TEXT DEFAULT (datetime('now')),
+
+    updated_at TEXT DEFAULT (datetime('now')),
+
+    FOREIGN KEY (note_id) REFERENCES notes(id) ON DELETE CASCADE,
+
+    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
+
+);
+
+CREATE TABLE IF NOT EXISTS bookmarks (
+
+    id         INTEGER PRIMARY KEY AUTOINCREMENT,
+
+    note_id    INTEGER NOT NULL,
+
+    user_id    INTEGER NOT NULL,
+
+    created_at TEXT DEFAULT (datetime('now')),
+
+    UNIQUE (note_id, user_id),
+
+    FOREIGN KEY (note_id) REFERENCES notes(id) ON DELETE CASCADE,
+
+    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
+
+);
+
+CREATE TABLE IF NOT EXISTS notifications (
+
+    id         INTEGER PRIMARY KEY AUTOINCREMENT,
+
+    user_id    INTEGER NOT NULL,
+
+    type       TEXT NOT NULL,
+
+    message    TEXT NOT NULL,
+
+    note_id    INTEGER,
+
+    is_read    INTEGER DEFAULT 0,
+
+    created_at TEXT DEFAULT (datetime('now')),
+
+    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
+
+    FOREIGN KEY (note_id) REFERENCES notes(id) ON DELETE SET NULL
+
+);
+
+CREATE TABLE IF NOT EXISTS reports (
+
+    id          INTEGER PRIMARY KEY AUTOINCREMENT,
+
+    note_id     INTEGER NOT NULL,
+
+    reporter_id INTEGER NOT NULL,
+
+    reason      TEXT NOT NULL,
+
+    details     TEXT,
+
+    status      TEXT DEFAULT 'pending',
+
+    created_at  TEXT DEFAULT (datetime('now')),
+
+    FOREIGN KEY (note_id)     REFERENCES notes(id) ON DELETE CASCADE,
+
+    FOREIGN KEY (reporter_id) REFERENCES users(id) ON DELETE CASCADE
+
+);
