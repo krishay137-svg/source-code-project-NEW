@@ -13,18 +13,28 @@ export default function Profile() {
   const [user, setUser] = useState(null);
 
   useEffect(() => {
+    let fetchedUser = null;
     setLoading(true);
-    Promise.all([
-      api.get('/notes/my').catch(() => []),
-    ]).then(([userNotes]) => {
-      setNotes(userNotes);
-      if (userNotes.length > 0) {
-        setUser({ full_name: userNotes[0].author_name, email: '' });
-      }
-    }).finally(() => {
-      setUser((prev) => prev || { full_name: 'You', email: 'Sign in to view your profile' });
-      setLoading(false);
-    });
+
+    api.get('/auth/me')
+      .then((data) => {
+        fetchedUser = data.user;
+        setUser(data.user);
+      })
+      .catch(() => {
+        // not authenticated — keep user null
+      })
+      .finally(() => {
+        api.get('/notes/my')
+          .then((userNotes) => setNotes(userNotes))
+          .catch(() => setNotes([]))
+          .finally(() => {
+            if (!fetchedUser) {
+              setUser((prev) => prev || { full_name: 'You', email: 'Sign in to view your profile' });
+            }
+            setLoading(false);
+          });
+      });
   }, []);
 
   const stats = [
@@ -46,6 +56,9 @@ export default function Profile() {
           <div className="text-center sm:text-left">
             <h1 className="text-2xl font-bold text-neutral-900">{user.full_name}</h1>
             <p className="text-sm text-neutral-500">{user.email}</p>
+            {user.created_at && (
+              <p className="text-xs text-neutral-400 mt-1">Member since {new Date(user.created_at).toLocaleDateString()}</p>
+            )}
             {notes.length === 0 && (
               <Link to="/upload" className="text-sm text-brand-600 hover:text-brand-700 font-medium mt-1 inline-block">
                 Upload your first note
