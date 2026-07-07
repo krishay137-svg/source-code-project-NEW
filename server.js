@@ -8,10 +8,18 @@ const morgan = require("morgan");
 
 require("./config/database");
 
-const indexRoutes = require("./routes/indexRoutes");
-const authRoutes = require("./routes/authRoutes");
-const noteRoutes = require("./routes/noteRoutes");
-const searchRoutes = require("./routes/searchRoutes");
+const indexRoutes        = require("./routes/indexRoutes");
+const authRoutes         = require("./routes/authRoutes");
+const noteRoutes         = require("./routes/noteRoutes");
+const searchRoutes       = require("./routes/searchRoutes");
+
+/* ---- Community Feature Routes (Part 6) ---- */
+const ratingRoutes       = require("./routes/ratingRoutes");
+const commentRoutes      = require("./routes/commentRoutes");
+const bookmarkRoutes     = require("./routes/bookmarkRoutes");
+const notificationRoutes = require("./routes/notificationRoutes");
+const reportRoutes       = require("./routes/reportRoutes");
+
 const { errorHandler, notFound } = require("./middleware/errorMiddleware");
 
 const app = express();
@@ -54,6 +62,18 @@ app.use("/", authRoutes);
 app.use("/", noteRoutes);
 
 app.use("/", searchRoutes);
+
+/* ---- Community Feature Routes (Part 6) ---- */
+
+app.use("/", ratingRoutes);
+
+app.use("/", commentRoutes);
+
+app.use("/", bookmarkRoutes);
+
+app.use("/", notificationRoutes);
+
+app.use("/", reportRoutes);
 
 /* ---------------- Error Handling ---------------- */
 
