@@ -340,6 +340,12 @@ See [CONTRIBUTORS.md](CONTRIBUTORS.md) for project team details.
 
 ---
 
+# License
+
+This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
+
+---
+
 # Acknowledgements
 
 We would like to thank everyone who contributed to the development of EduShare. This project was created to encourage collaborative learning and make educational resources more accessible to students.
