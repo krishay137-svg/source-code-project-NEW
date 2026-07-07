@@ -9,6 +9,23 @@ A collaborative E-Learning Notes Sharing Platform that enables students to uploa
 
 ---
 
+## Table of Contents
+
+- [Overview](#overview)
+- [Quick Start](#quick-start)
+- [Features](#features)
+- [Technology Stack](#technology-stack)
+- [Project Structure](#project-structure)
+- [Installation](#installation)
+- [Database Schema](#database-schema)
+- [Application Workflow](#application-workflow)
+- [Team](#team)
+- [Future Enhancements](#future-enhancements)
+- [Contributing](#contributing)
+- [Acknowledgements](#acknowledgements)
+
+---
+
 ## Overview
 
 EduShare is a full-stack web application developed using Node.js, Express.js, MySQL, HTML, CSS, and JavaScript. The platform provides students with a centralized repository for academic resources while encouraging peer-to-peer learning through ratings, comments, bookmarks, and personalized dashboards.
