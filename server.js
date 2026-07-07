@@ -13,6 +13,9 @@ const authRoutes         = require("./routes/authRoutes");
 const noteRoutes         = require("./routes/noteRoutes");
 const searchRoutes       = require("./routes/searchRoutes");
 
+/* ---- Dashboard & Profile Routes (Part 7) ---- */
+const profileRoutes      = require("./routes/profileRoutes");
+
 /* ---- Community Feature Routes (Part 6) ---- */
 const ratingRoutes       = require("./routes/ratingRoutes");
 const commentRoutes      = require("./routes/commentRoutes");
@@ -53,6 +56,10 @@ app.use(
     express.static(path.join(__dirname, "uploads"))
 );
 
+/* Ensure avatars directory exists */
+const fs = require("fs");
+fs.mkdirSync(path.join(__dirname, "uploads", "avatars"), { recursive: true });
+
 /* ---------------- Routes ---------------- */
 
 app.use("/", indexRoutes);
@@ -62,6 +69,10 @@ app.use("/", authRoutes);
 app.use("/", noteRoutes);
 
 app.use("/", searchRoutes);
+
+/* ---- Dashboard & Profile Routes (Part 7) ---- */
+
+app.use("/", profileRoutes);
 
 /* ---- Community Feature Routes (Part 6) ---- */
 
