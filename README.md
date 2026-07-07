@@ -17,6 +17,27 @@ The application follows a modular MVC architecture and is designed with scalabil
 
 ---
 
+## Quick Start
+
+```bash
+# Clone the repository
+git clone https://github.com/your-username/EduShare.git
+cd EduShare
+
+# Install dependencies
+npm install
+
+# Set up environment variables
+cp .env.example .env
+
+# Start the dev server
+npm run dev
+```
+
+Visit `http://localhost:3000` to get started.
+
+---
+
 ## Features
 
 ### User Authentication
